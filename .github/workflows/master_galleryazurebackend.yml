@@ -10,7 +10,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: read
 
     steps:
@@ -25,16 +24,10 @@ jobs:
       - name: Install npm dependencies
         run: npm install
 
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A3220FD3C0F949DF939F732A5B5835BB }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_096F17E9980345178682D1D9EDB7EF3F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3B09377C9EFA46E1A660B1A38B974DBD }}
-
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'GalleryAzureBackend'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
