@@ -24,7 +24,7 @@ jobs:
       - name: Install npm dependencies
         run: npm install
 
-      - name: Prepare deployment package (no extra folders)
+      - name: Prepare deployment package
         run: |
           mkdir deploy
           cp server.js deploy/
@@ -33,7 +33,7 @@ jobs:
           cp package-lock.json deploy/
           cp -r client-dist deploy/
           cd deploy
-          zip -r ../release.zip .
+          zip -r ../release.zip ./*
           cd ..
 
       - name: Upload artifact for deployment
